@@ -1,0 +1,50 @@
+<html ng-app="empmanager">
+<head>
+	<title>Trial page</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body ng-controller="EmpListCtrl">
+	
+	<video src="1.mp4"></video>
+	<span ng-bind="test"></span>
+
+	<input ng-model="test">
+
+	<button ng-click="sayHello()">Click me</button>
+
+	<div ng-show="test">
+		This is inside the div
+	</div>
+
+	<table>
+		<thead>
+			<th>Name</th>
+			<th>Age</th>
+			<th>View</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="emp in employees track by $index">
+				<td>{{emp.name}}</td>
+				<td>{{emp.age}}</td>
+				<td><button ng-click="onSelect(emp)">View Details</button> </td>
+			</tr>
+		</tbody>
+	</table>
+
+	<emp-details emp="selectedEmployee" emp-title="{{test}}" ></emp-details>	
+
+	<div id="details" ng-show="selectedEmployee">
+		Selected Employee is: <br/>
+		Name: {{selectedEmployee.name}} <br/>
+		Age: {{selectedEmployee.age}} <br/>
+		Dept: {{selectedEmployee.department}} <br/>
+	</div>
+
+	<script type="text/javascript" src="angular.js"></script>
+	<script type="text/javascript" src="app/employee/employee.js"></script>
+	<script type="text/javascript" src="app/app.js"></script>
+	<script type="text/javascript"src="app/employee/controllers/EmpListCtrl.js"></script>
+	<script type="text/javascript"src="app/employee/directives/empDetails.js"></script>
+	
+</body>
+</html>
