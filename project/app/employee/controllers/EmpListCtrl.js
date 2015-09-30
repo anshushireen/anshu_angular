@@ -1,16 +1,29 @@
 angular.module('empmanager.employee')
-	.controller('EmpListCtrl',['$scope', function($scope){
-		$scope.test = "safd";
+	.controller('EmpListCtrl',['EmpService', function(EmpService){
+		this.test = "angular testpage";
 
-		$scope.sayHello = function(){
+		console.log("controller");
+		EmpService.setName("controllerName");
+
+		this.sayHello = function(){
 			alert('hello');
 		};
 
-		$scope.onSelect = function(employee){
-			$scope.selectedEmployee = employee;
+		this.dummyEmp = {
+			name: 'dummy',
+			age: 10
 		};
 
-		$scope.employees = [
+		this.onDummy = function(){
+			alert('dummy');
+		};
+
+		var self = this;
+		this.onSelect = function(employee){
+			self.selectedEmployee = employee;
+		};
+
+		this.employees = [
 		{
 			name: "emp1",
 			age: 23,

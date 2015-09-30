@@ -3,19 +3,21 @@
 	<title>Trial page</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body ng-controller="EmpListCtrl">
+<body ng-controller="EmpListCtrl as emp">
 	
-	<video src="1.mp4"></video>
-	<span ng-bind="test"></span>
+	<span ng-bind="emp.test | uppercase"></span>
 
-	<input ng-model="test">
+	<input ng-model="emp.test">
 
-	<button ng-click="sayHello()">Click me</button>
+	<button ng-click="emp.sayHello()">Click me</button>
 
-	<div ng-show="test">
+	<div ng-show="emp.test">
 		This is inside the div
 	</div>
+	{{12 | currency}}
+	{{emp.employees | json}}
 
+	{{'something' | empTitle}}
 	<table>
 		<thead>
 			<th>Name</th>
@@ -23,17 +25,22 @@
 			<th>View</th>
 		</thead>
 		<tbody>
-			<tr ng-repeat="emp in employees track by $index">
-				<td>{{emp.name}}</td>
-				<td>{{emp.age}}</td>
-				<td><button ng-click="onSelect(emp)">View Details</button> </td>
+			<tr ng-repeat="employee in emp.employees track by $index">
+				<td>{{employee.name | empTitle:"Hi"}}</td>
+				<td>{{employee.age}}</td>
+				<td><button ng-click="emp.onSelect(employee)">View Details</button> </td>
 			</tr>
 		</tbody>
 	</table>
+	<emp-details on-callback="emp.sayHello()" emp="emp.selectedEmployee" emp-title="{{emp.test}}">
+		<h1>This is from outside</h1>
+	</emp-details>
 
-	<emp-details emp="selectedEmployee" emp-title="{{test}}" ></emp-details>	
+	<emp-details on-callback="emp.onDummy()" emp="emp.dummyEmp" emp-title="some dummy title">
+		<h1>This is dummy data from outside  {{test}}</h1>
+	</emp-details>	
 
-	<div id="details" ng-show="selectedEmployee">
+	<div id="details" ng-show="emp.selectedEmployee">
 		Selected Employee is: <br/>
 		Name: {{selectedEmployee.name}} <br/>
 		Age: {{selectedEmployee.age}} <br/>
@@ -45,6 +52,8 @@
 	<script type="text/javascript" src="app/app.js"></script>
 	<script type="text/javascript"src="app/employee/controllers/EmpListCtrl.js"></script>
 	<script type="text/javascript"src="app/employee/directives/empDetails.js"></script>
+	<script type="text/javascript"src="app/employee/filters/empTitle.js"></script>
+	<script type="text/javascript"src="app/employee/services/EmpService.js"></script>
 	
 </body>
 </html>
